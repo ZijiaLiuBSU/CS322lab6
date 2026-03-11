@@ -9,5 +9,17 @@ public class Main {
 
         StdAudio.play(birdSounds);
         StdAudio.drain();
+
+        int start = 0;
+        int end = birdSounds.length / 3;
+
+        double[] oneBird = new double[end - start];
+
+        for (int i = 0; i < oneBird.length; i++) {
+            oneBird[i] = birdSounds[start + i];
+        }
+
+        StdAudio.play(oneBird);
+        StdAudio.drain();
     }
 }
