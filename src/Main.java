@@ -1,25 +1,30 @@
-// Lab 06: Music Visualizer
-// Name: Zijia Liu
+import javax.swing.JOptionPane;
 
 public class Main {
     public static void main(String[] args) {
-        double[] birdSounds = StdAudio.read("assets/cardinal_trim.wav");
+        String filename = JOptionPane.showInputDialog(
+                null,
+                "Enter a sound filename to play",
+                "assets/cardinal_trim.wav"
+        );
 
-        System.out.println("Length of sound array: " + birdSounds.length);
-
-        StdAudio.play(birdSounds);
-        StdAudio.drain();
-
-        int start = 0;
-        int end = birdSounds.length / 3;
-
-        double[] oneBird = new double[end - start];
-
-        for (int i = 0; i < oneBird.length; i++) {
-            oneBird[i] = birdSounds[start + i];
+        if (filename == null) {
+            return;
         }
 
-        StdAudio.play(oneBird);
-        StdAudio.drain();
+        filename = filename.trim();
+
+        if (filename.length() == 0) {
+            JOptionPane.showMessageDialog(null, "No filename was entered.");
+            return;
+        }
+
+        try {
+            double[] samples = StdAudio.read(filename);
+            StdAudio.play(samples);
+            StdAudio.drain();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Could not open or play the file.");
+        }
     }
 }
